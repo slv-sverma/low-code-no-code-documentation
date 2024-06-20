@@ -1,0 +1,170 @@
+---
+title: Auth Pages
+description: Your first document
+---
+
+import { JsonViewer, Image } from "@/components/core";
+
+When we open auth pages we get configuration from config api, that looks like below.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+      configCaches: true,
+      copyright_text: "XU Lifestyle",
+      login_logo: "https://xulifestyle.com/xu-logo.svg",
+      sidebar_icon: "https://xulifestyle.com/favicon.ico",
+    },
+    header: {},
+    footer: {},
+    adminMenu: [],
+    siteMenu: [],
+    authMenu: [
+      {
+        template: "login-template-one",
+        label: "Sign in",
+        url: "/login",
+        entity: "/noauth/api/login-via-email/",
+        id: "login-email",
+        caches: true,
+        nextPage: "/login/verify-otp",
+        param: "email",
+      },
+    ],
+  }}
+/>
+
+The auth menu is responsible for managing all authentication-related pages such as login, registration, and user verification. In this context, the configuration JSON specifically includes two pages: Login and Verify OTP. The auth menu is an array of objects, where each object contains the following properties:
+
+| Property    | Description                                                                                                                                                                                                                          |
+| ----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`     | This label is Display Where we show list of page                                                                                                                                                                                     |
+| `template`  | This is template name, and template name is used to Mapping template and Render match template.                                                                                                                                      |
+| `url`       | This is page url                                                                                                                                                                                                                     |
+| `id`        | id is used to uniquely identify menu in all menu array                                                                                                                                                                               |
+| `caches`    | caches is used to store caches of api json data                                                                                                                                                                                      |
+| `nextPage`  | This is next page url. After auth form submit success fully then we can redirect user to next page using                                                                                                                             |
+| `param`     | if we want to send some data from one to another auth pages after form submit successful then param parameter will help them. We got name of form filed from param where we can collect info using name and pass into another pages. |
+| `prevParam` | It have data of that is pass by previous pages.                                                                                                                                                                                      |
+
+These elements collectively define the structure and functionality of the auth menu, ensuring that each authentication page is correctly configured and behaves as expected. The inclusion of the template name and entity ensures that the appropriate layout and data are used for each page. The keepToken flag is crucial for managing session persistence, while the cache flag helps optimize performance by determining which pages should be stored in the cache. The prevParam is useful for passing necessary information from one authentication step to another, ensuring a seamless user experience.
+
+### Process of Auth Login Page
+
+**Step 1: Get current page url**
+
+We age getting current page using using in filed feature of application
+
+**Step 2: Check Is Page Exist**
+
+Now we are checking is Is is exist in our AuthMenu Configuration Json if page is not exist in data then show error. If Page is exist then go to next step
+
+**Step 3: Call Option APi**
+
+Now we are calling Option api and wait for response if we get error in api then show error. If our api is successful then go to next step
+
+`Option Api Data formate`
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+    },
+    form: {
+      title: "Email Login",
+      description: null,
+      form_template: "form-template-one",
+      entity: "/noauth/api/login-via-email/",
+      size: {
+        width: 50,
+        height: "auto",
+        maxWidth: 50,
+        maxHeight: 80,
+      },
+      column: {
+        desktop: 1,
+        laptop: 1,
+        tablet: 1,
+      },
+      gap: 4,
+    },
+    actions: {},
+    table: {
+      view: ["heading", "sub_heading", "email", "id"],
+      filter: {},
+    },
+    layout: [
+      {
+        template: "auth-style-one",
+        url: "/login",
+        entity: "/noauth/api/login-via-email/",
+        api: [],
+      },
+    ],
+    permissions: [],
+    POST: {
+      heading: {
+        type: "heading",
+        label: "Welcome Back",
+        className: "mb-[-16px]",
+        style: {
+          align: "center",
+        },
+      },
+      sub_heading: {
+        type: "description",
+        label: "Please sign in to continue",
+        className: "mb-8",
+        style: {
+          align: "center",
+        },
+      },
+      email: {
+        type: "email",
+        read_only: false,
+        label: "Enter your email",
+        required: true,
+        max_length: 100,
+        icon: "email",
+        label_hidden: true,
+        placeholder: "Email",
+      },
+      create: {
+        type: "button",
+        required: true,
+        read_only: false,
+        label: "Login",
+        style: {
+          align: "right",
+          isFullWidth: true,
+          colMerge: {
+            deskTop: 1,
+            tablet: 1,
+            mobile: 1,
+          },
+        },
+        button_style: "login",
+      },
+    },
+  }}
+/>
+
+| Property      | Description                                                                                                              |
+| ------------- | :----------------------------------------------------------------------------------------------------------------------- |
+| `meta`        | It contains meta data of current page                                                                                    |
+| `form`        | it includes data of form, like what is name of form, form description, form template, form api endpoint, form style etc. |
+| `POST`        | It contains form input filed config                                                                                      |
+| `permissions` | It is permission array of current user                                                                                   |
+
+**Step 4: RenderTemplate**
+
+Retrieve the template name from the options API and validate its existence within our application. if it get template then proceed to the next step accordingly.
+
+**Step 5: Render Data on page**
+
+Currently, we are displaying a skeleton and rendering the template while calling APIs to fetch data. Depending on the requirements, there may be a single or multiple APIs involved. We await the responses from these APIs. When the API get result, we pass all retrieved data into the template and render it on the page.

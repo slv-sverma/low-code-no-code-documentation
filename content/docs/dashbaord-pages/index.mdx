@@ -1,0 +1,318 @@
+---
+title: Admin menu
+description: Your first document
+---
+
+import { JsonViewer, Image } from "@/components/core";
+
+<div class="admin-page-diagram">
+  <Image src="/admin-process.svg" alt="Example Image" width="752" height="46" />
+</div>
+After Login we got json with `Admin Pages` configuration
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+      configCaches: true,
+      copyright_text: "XU Lifestyle",
+      login_logo: "https://xulifestyle.com/xu-logo.svg",
+      sidebar_icon: "https://xulifestyle.com/favicon.ico",
+    },
+    header: {
+      template: "header-style-one",
+      entity: "/api/society/",
+      caches: false,
+    },
+    footer: {
+      template: "footer-style-one",
+      entity: "/api/society/",
+      caches: false,
+    },
+    adminMenu: [
+      {
+        template: "dashboard-generic-grid",
+        label: "society",
+        url: "/dashboard/society",
+        entity: "/api/society/",
+        icon: "page",
+        id: "Society",
+        caches: false,
+        key: "society",
+        order: 1,
+      },
+      {
+        template: "dashboard-generic-grid",
+        label: "about",
+        url: "/dashboard/about",
+        entity: "/api/about/",
+        icon: "page",
+        id: "About",
+        caches: false,
+        key: "about",
+        order: 2,
+      },
+    ],
+    siteMenu: [],
+    authMenu: [],
+  }}
+/>
+
+In above json we have property `adminMenu` that which contain dashboard pages menu configuration. Here we have list of menu that is display on left side of dashboard. when user is click on menu we got url from browser and
+
+<JsonViewer
+  collapse={false}
+  json={[
+    {
+      template: "login-template-one",
+      label: "Sign in",
+      url: "/login",
+      entity: "/noAdmin/api/login-via-email/",
+      id: "login-email",
+      caches: true,
+      nextPage: "/login/verify-otp",
+      param: "email",
+    },
+  ]}
+/>
+
+| Property    | Description                                                                                      |
+| ----------- | :----------------------------------------------------------------------------------------------- |
+| `label`     | THis is label of menu                                                                            |
+| `template`  | This is template name, and template name is used to Mapping template and Render match template.  |
+| `url`       | This is page url                                                                                 |
+| `id`        | id is used to uniquely identify menu in all menu array                                           |
+| `caches`    | caches is used to store caches of api json data                                                  |
+| `nextPage`  | This is next page url. After Admin form submit successfully then user can redirect to next page. |
+| `param`     | It is used to send some information from current to next page                                    |
+| `prevParam` | It have data of that is pass by previous pages.                                                  |
+
+### Process of Dashboard Page
+
+**Step 1. Get current page url :**
+When page is loading get url from browser.
+
+**Step 2. Check Is Page Exist :**
+Check is page is exist in menu config list
+
+**Step 3. Call Option APi:**
+If Page is exist in menu call option API
+
+`Option Api Data formate`
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+    },
+    form: {
+      title: "Property Sort",
+      description: null,
+      form_template: "form-template-one",
+      entity: "/api/property-sort/",
+      size: {
+        width: 50,
+        height: "auto",
+        maxWidth: 50,
+        maxHeight: 80,
+      },
+      column: {
+        desktop: 1,
+        laptop: 1,
+        tablet: 1,
+      },
+      gap: 4,
+      nested_actions: true,
+      key: "property-sort",
+    },
+    actions: {
+      view: {
+        label: "View",
+        icon: "eye",
+      },
+      edit: {
+        label: "Edit",
+        icon: "pencil",
+        inlineUpdate: false,
+      },
+      delete: {
+        label: "delete",
+        icon: "delete",
+      },
+    },
+    table: {
+      view: ["display_order", "display_name", "key", "orderby", "id"],
+      filter: {},
+    },
+    layout: [
+      {
+        template: "dashboard-generic-grid",
+        detailsTemplate: "dashboard-generic-list-details",
+        url: "/dashboard/property-sort",
+        entity: "/api/property-sort/",
+        api: [
+          {
+            entity: "/api/property-sort/",
+            method: "GET",
+            apiKey: "get",
+            isSearch: true,
+            isDetails: true,
+          },
+        ],
+      },
+    ],
+    permissions: ["get", "put", "patch", "post", "delete", "options"],
+    POST: {
+      id: {
+        column_name: "id",
+        label: "Id",
+        type: "integer",
+        choices: [],
+        search_url: "",
+        required: true,
+        max_length: 32,
+        auto_created: true,
+        hidden: true,
+      },
+      display_order: {
+        column_name: "display_order",
+        label: "Display Order",
+        type: "integer",
+        choices: [],
+        search_url: "",
+        required: false,
+        max_length: 32,
+        auto_created: true,
+      },
+      display_name: {
+        column_name: "display_name",
+        label: "Display Name",
+        type: "string",
+        choices: [],
+        search_url: "",
+        required: false,
+        max_length: null,
+        auto_created: false,
+      },
+      key: {
+        column_name: "key",
+        label: "Key",
+        type: "string",
+        choices: [],
+        search_url: "",
+        required: false,
+        max_length: null,
+        auto_created: false,
+      },
+      orderby: {
+        column_name: "orderby",
+        label: "Orderby",
+        type: "string",
+        choices: [],
+        search_url: "",
+        required: false,
+        max_length: null,
+        auto_created: true,
+      },
+      create: {
+        type: "button",
+        required: true,
+        read_only: false,
+        label: "Submit",
+        style: {
+          align: "right",
+          isFullWidth: true,
+          colMerge: {
+            deskTop: 1,
+            tablet: 1,
+            mobile: 1,
+          },
+        },
+      },
+    },
+  }}
+/>
+
+**Step 4. RenderTemplate:**
+After successed Option api Render template and check `layout` property in above option api json.
+If template have more than one element then it render using loop.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    layout: [
+      {
+        template: "dashboard-generic-grid",
+        detailsTemplate: "dashboard-generic-list-details",
+        url: "/dashboard/property-sort",
+        entity: "/api/property-sort/",
+        api: [
+          {
+            entity: "/api/property-sort/",
+            method: "GET",
+            apiKey: "get",
+            isSearch: true,
+            isDetails: true,
+          },
+        ],
+      },
+    ],
+  }}
+/>
+
+Here layout is contain configuration of nested template data. because one single page may have more than one or two section and every section may have different layout, and for every layout have different template. So here we have template name api endpoint, and if it is listing template then it also have details page template name.
+
+Fot this template data we get another `property` called `api`. This is also array formate it content list of configuration for data that includes api end-point, api key, api methods etc.
+
+**Step 5. Call Get apis:**
+Here calling apis and after success api.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    count: 3,
+    per_page: 5,
+    previous: null,
+    next: null,
+    response: [
+      {
+        id: 3,
+        display_name: "Price - Low to High",
+        key: "rooms.total_rent",
+        orderby: "asc",
+        display_order: 1,
+      },
+      {
+        id: 2,
+        display_name: "Availability",
+        key: "rooms.status.keyword",
+        orderby: "desc",
+        display_order: 3,
+      },
+      {
+        id: 1,
+        display_name: "Price - High to Low",
+        key: "rooms.total_rent",
+        orderby: "desc",
+        display_order: 2,
+      },
+    ],
+  }}
+/>
+
+and put all api data into `data` object and option api json push into `config` option and pass into template
+
+**Step 6. Render Data on page:**
+Now we are Show skelton and Render template and call apis for data there are may be single or multiple api depend on requirement, and wait response. In API response get an error then show error in ui, if api is successed then Pass all data into template and display on Page
+
+**Listing Page Preview**
+
+<Image src="/dashboard.webp" alt="Example Image" width="1500" height="400" />
+
+**Edit/Add Page Preview**
+
+<Image src="/edit.webp" alt="Example Image" width="1500" height="400" />

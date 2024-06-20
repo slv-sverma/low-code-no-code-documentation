@@ -1,0 +1,153 @@
+---
+title: Login Page
+description: Components 848787878
+---
+
+import { JsonViewer, Image } from "@/components/core";
+
+When we open login page we get configuration from config api. and we get json like this.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+      configCaches: true,
+      copyright_text: "XU Lifestyle",
+      login_logo: "https://xulifestyle.com/xu-logo.svg",
+      sidebar_icon: "https://xulifestyle.com/favicon.ico",
+    },
+    header: {},
+    footer: {},
+    adminMenu: [],
+    siteMenu: [],
+    authMenu: [
+      {
+        template: "login-template-one",
+        label: "Sign in",
+        url: "/login",
+        entity: "/noauth/api/login-via-email/",
+        id: "login-email",
+        caches: true,
+        nextPage: "/login/verify-otp",
+        param: "email",
+      },
+    ],
+  }}
+/>
+
+Here get auth Menu that have some require property for next steps
+
+| Property    | Description                                                                                                                                                                                                                           |
+| ----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `label`     | This label is Display Where we show list of page                                                                                                                                                                                      |
+| `template`  | This is template name, and template name is used to Mapping template and Render match template.                                                                                                                                       |
+| `url`       | This is page url                                                                                                                                                                                                                      |
+| `id`        | id is used to uniquely identify menu in all menu array                                                                                                                                                                                |
+| `caches`    | caches is used to store caches of api json data                                                                                                                                                                                       |
+| `nextPage`  | This is next page url. After Admin form submit success fully then we can redirect user to next page using                                                                                                                             |
+| `param`     | if we want to send some data from one to another Admin pages after form submit successful then param parameter will help them. We got name of form filed from param where we can collect info using name and pass into another pages. |
+| `prevParam` | It have data of that is pass by previous pages.                                                                                                                                                                                       |
+
+Here we we call option api that we get endpoint `/noauth/api/login-via-email/` from above json and call option api
+
+### Option API Data
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+    },
+    form: {
+      title: "Email Login",
+      description: null,
+      form_template: "form-template-one",
+      entity: "/noauth/api/login-via-email/",
+      size: {
+        width: 50,
+        height: "auto",
+        maxWidth: 50,
+        maxHeight: 80,
+      },
+      column: {
+        desktop: 1,
+        laptop: 1,
+        tablet: 1,
+      },
+      gap: 4,
+    },
+    actions: {},
+    table: {
+      view: ["heading", "sub_heading", "email", "id"],
+      filter: {},
+    },
+    layout: [
+      {
+        template: "auth-style-one",
+        url: "/login",
+        entity: "/noauth/api/login-via-email/",
+        api: [],
+      },
+    ],
+    permissions: [],
+    POST: {
+      heading: {
+        type: "heading",
+        label: "Welcome Back",
+        className: "mb-[-16px]",
+        style: {
+          align: "center",
+        },
+      },
+      sub_heading: {
+        type: "description",
+        label: "Please sign in to continue",
+        className: "mb-8",
+        style: {
+          align: "center",
+        },
+      },
+      email: {
+        type: "email",
+        read_only: false,
+        label: "Enter your email",
+        required: true,
+        max_length: 100,
+        icon: "email",
+        label_hidden: true,
+        placeholder: "Email",
+      },
+      create: {
+        type: "button",
+        required: true,
+        read_only: false,
+        label: "Login",
+        style: {
+          align: "right",
+          isFullWidth: true,
+          colMerge: {
+            deskTop: 1,
+            tablet: 1,
+            mobile: 1,
+          },
+        },
+        button_style: "login",
+      },
+    },
+  }}
+/>
+
+### Preview of page
+
+when we got option api data just render `login-template-one` template that look like that
+
+<Image
+  src="/login-page.png"
+  class="ui-image"
+  alt="Example Image"
+  width="752"
+  height="46"
+/>

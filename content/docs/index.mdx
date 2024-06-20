@@ -1,0 +1,623 @@
+---
+title: Application Process
+description: Your first document
+---
+
+import { JsonViewer, Image } from "@/components/core";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+
+Low-code and no-code are approaches to software development that aim to simplify
+the process of building applications, making it accessible to non-developers or those
+with limited coding experience.
+
+### Flow of Application
+
+In a low-code/no-code application, all functionalities are executed based on a configuration JSON retrieved from the backend. When the application loads for the first time, it calls an API to fetch this configuration JSON data. This configuration determines which site is loading and includes metadata, headers, footers, site menus, authentication menus, and admin menus configuration.
+
+<div align="center">
+  <Image src="/app-process.svg" alt="Example Image" width="751" height="581" />
+</div>
+
+On the first app load, we call the configuration API for application settings. The configuration is divided into six main categories.
+
+- [**Meta Config**](#meta) `(authMenu)` : It have Some meta information for seo and branding info.
+- [**Site Config**](#site-menu) `(siteMenu)` : It have All Public/Private Web pages configuration JSON.
+- [**Header Config**](#header) `(header)` : It have header configuration JSON.
+- [**Footer Config**](#footer) `(header)` : It have footer pages configuration JSON.
+- [**Auth Config**](#auth-menu) `(auth-menu)` : It have auth pages configuration JSON.
+- [**Admin Config**](#admin-menu) `(adminMenu)` : It have Admin Pages/Dashboard pages configuration JSON.
+
+Here we get Configuration json. as we shown below tab. First Tab is display JSON for non logged-in user and second for logged-in user.
+if site open Non logged-in user they do not have access for Dashboard/Admin Pages. So their json have empty `adminMenu`. and when user logged-in then they open application then they have access to open `Dashboard/adminMenu`.
+
+**Configuration JSON**
+
+<Tabs items={["Non Logged-in user", "Logged-in user"]}>
+  <Tab value="Non Logged-in user" class="no-border no-bg">
+    <JsonViewer
+      collapse={1}
+      json={{
+        meta: {
+          title: "XU Lifestyle",
+          description: "",
+          configCaches: true,
+          copyright_text: "XU Lifestyle",
+          login_logo: "https://xulifestyle.com/xu-logo.svg",
+          sidebar_icon: "https://xulifestyle.com/favicon.ico",
+        },
+        header: {
+          template: "header-style-one",
+          entity: "/api/society/",
+          caches: false,
+        },
+        footer: {
+          template: "footer-style-one",
+          entity: "/api/society/",
+          caches: false,
+        },
+        adminMenu: [],
+        siteMenu: [
+          {
+            template: "coming-soon",
+            label: "Home",
+            url: "/",
+            entity: "/api/home/",
+            icon: "page",
+            id: "society",
+            caches: true,
+            local: true,
+            key: "society",
+          },
+        ],
+        authMenu: [
+          {
+            template: "login-template-one",
+            label: "Sign in",
+            url: "/login",
+            entity: "/noauth/api/login-via-email/",
+            id: "login-email",
+            caches: true,
+            nextPage: "/login/verify-otp",
+            param: "email",
+          },
+          {
+            template: "login-template-one",
+            label: "Sign in",
+            url: "/login/verify-otp",
+            entity: "/noauth/api/verify-otp/",
+            id: "login-email-verify-otp",
+            keepToken: true,
+            caches: true,
+            prevParam: "email",
+          },
+        ],
+      }}
+    />
+  </Tab>
+  <Tab value="Logged-in user" class="no-border no-bg">
+    <JsonViewer
+      collapse={1}
+      json={{
+        meta: {
+          title: "XU Lifestyle",
+          description: "",
+          configCaches: true,
+          copyright_text: "XU Lifestyle",
+          login_logo: "https://xulifestyle.com/xu-logo.svg",
+          sidebar_icon: "https://xulifestyle.com/favicon.ico",
+        },
+        header: {
+          template: "header-style-one",
+          entity: "/api/society/",
+          caches: false,
+        },
+        footer: {
+          template: "footer-style-one",
+          entity: "/api/society/",
+          caches: false,
+        },
+        adminMenu: [
+          {
+            template: "dashboard-generic-grid",
+            label: "society",
+            url: "/dashboard/society",
+            entity: "/api/society/",
+            icon: "page",
+            id: "Society",
+            caches: false,
+            key: "society",
+            order: 1,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "about",
+            url: "/dashboard/about",
+            entity: "/api/about/",
+            icon: "page",
+            id: "About",
+            caches: false,
+            key: "about",
+            order: 6,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "property",
+            url: "/dashboard/property",
+            entity: "/api/property/",
+            icon: "page",
+            id: "Property",
+            caches: false,
+            key: "property",
+            order: 2,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "property_filters",
+            url: "/dashboard/property-filters",
+            entity: "/api/property-filters/",
+            icon: "page",
+            id: "Property Filters",
+            caches: false,
+            key: "property-filters",
+            order: 4,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "property_sort",
+            url: "/dashboard/property-sort",
+            entity: "/api/property-sort/",
+            icon: "page",
+            id: "Property Sort",
+            caches: false,
+            key: "property-sort",
+            order: 5,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "room",
+            url: "/dashboard/property-room",
+            entity: "/api/room/",
+            icon: "page",
+            id: "Room",
+            caches: false,
+            key: "room",
+            order: 3,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "sub_header",
+            url: "/dashboard/sub_header",
+            entity: "/api/sub-header/",
+            icon: "page",
+            id: "Sub Header",
+            caches: false,
+            key: "sub_header",
+            order: 7,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "faq",
+            url: "/dashboard/faq",
+            entity: "/api/faq/",
+            icon: "page",
+            id: "Faq",
+            caches: false,
+            key: "faq",
+            order: 11,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "contact",
+            url: "/dashboard/contact",
+            entity: "/api/contact/",
+            icon: "page",
+            id: "Contact",
+            caches: false,
+            key: "contact",
+            order: 10,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "footer",
+            url: "/dashboard/footer",
+            entity: "/api/footer/",
+            icon: "page",
+            id: "footer",
+            caches: false,
+            key: "footer",
+            order: 8,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "Footer Contacts",
+            url: "/dashboard/footer_contacts",
+            entity: "/api/footer_contacts/",
+            icon: "page",
+            id: "footer_contacts",
+            caches: false,
+            key: "footer_contacts",
+            order: 9,
+          },
+          {
+            template: "dashboard-generic-grid",
+            label: "Documents",
+            url: "/dashboard/documents",
+            entity: "/api/documents/",
+            icon: "page",
+            id: "documents",
+            caches: false,
+            key: "documents",
+            order: 12,
+          },
+        ],
+        siteMenu: [
+          {
+            template: "coming-soon",
+            label: "Home",
+            url: "/",
+            entity: "/api/home/",
+            icon: "page",
+            id: "society",
+            caches: true,
+            local: true,
+            key: "society",
+          },
+        ],
+        authMenu: [
+          {
+            template: "login-template-one",
+            label: "Sign in",
+            url: "/login",
+            entity: "/noauth/api/login-via-email/",
+            id: "login-email",
+            caches: true,
+            nextPage: "/login/verify-otp",
+            param: "email",
+          },
+          {
+            template: "login-template-one",
+            label: "Sign in",
+            url: "/login/verify-otp",
+            entity: "/noauth/api/verify-otp/",
+            id: "login-email-verify-otp",
+            keepToken: true,
+            caches: true,
+            prevParam: "email",
+          },
+        ],
+      }}
+    />
+  </Tab>
+</Tabs>
+
+### Meta
+
+The metadata encompasses site-specific details that vary from one site to another. This includes elements such as the site title, description, footer copyright text, logo, and additional relevant information. These details are essential for defining the site's identity and branding, ensuring each site has a unique and consistent presentation. For instance, the title and description are used for search engine optimization and browser tab labels, the footer copyright text provides legal and ownership information, and the logo represents the site's brand visually.
+
+| Property         | Description                                                                          |
+| ---------------- | :----------------------------------------------------------------------------------- |
+| `title`          | The title of the site, which appears on the browser tab and is used for SEO purposes |
+| `description`    | A brief summary of the site’s content, also used for SEO.                            |
+| `copyright_text` | Legal and ownership information displayed in the footer.                             |
+| `login_logo`     | A visual representation of the site's brand                                          |
+| `sidebar_icon`   | A visual representation of the site's brand for sidebar                              |
+
+### Site Menu
+
+The site menu contains a list of public pages in a JSON format, accessible by both logged-in and non-logged-in users. The site menu is an array of objects, with each object including the following properties:
+
+| Property       | Description                                  |
+| -------------- | :------------------------------------------- |
+| `templateName` | The name of the template used for the page.  |
+| `label`        | The display name of the menu item.           |
+| `url`          | The URL of the page.                         |
+| `entity`       | The entity associated with the page.         |
+| `icon`         | The icon representing the menu item.         |
+| `id`           | A unique identifier for the menu item.       |
+| `cache`        | Indicates whether the page should be cached. |
+| `local`        | Specifies if the page is stored locally.     |
+| `key`          | A key used for identifying the menu item.    |
+
+These details collectively define the structure and behavior of the site menu, ensuring it is easily accessible and navigable for all users.
+
+### Header
+
+We get this json from configuration, here we get entity name(api endpoint) and template name, and also one more flag caches.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    template: "header-style-one",
+    entity: "/api/society/",
+    caches: false,
+  }}
+/>
+
+Using entity call api(`like: http://api-domain/api/header-style-one/`) and get Header json data and Load template That is match name according template that is got in Json configuration. and When we get Header json we pass all data into Template, Site Menu Json, Header Json and Logo Site name that we got on Configuration > meta data. and we Got Header as we shown below
+
+We got This Data in template
+
+<JsonViewer
+  collapse={false}
+  json={{
+    logo: {
+      image_link: "/assets/delivery-pigeon/logo.webp",
+      title: "",
+      tagline: "",
+      link: {
+        url: "/",
+        target: "_self",
+      },
+    },
+    menu: [
+      {
+        label: "Home",
+        url: "/",
+        template: "home",
+        entity: "/api/home/",
+        icon: "page",
+        id: "home",
+        caches: true,
+        local: true,
+        key: "home",
+      },
+      {
+        label: "About Us",
+        url: "/about",
+        template: "about-us",
+        entity: "/api/about-us/",
+        icon: "page",
+        id: "about-us",
+        caches: true,
+        local: true,
+        key: "about-us",
+      },
+      {
+        label: "Become a Business Partner",
+        url: "/business-partner",
+        template: "business-partner",
+        entity: "/api/business-partner/",
+        icon: "page",
+        id: "business-partner",
+        caches: true,
+        local: true,
+        key: "business-partner",
+      },
+      {
+        label: "Media",
+        url: "/media",
+        template: "media",
+        entity: "/api/media/",
+        icon: "page",
+        id: "media",
+        caches: true,
+        local: true,
+        key: "media",
+      },
+      {
+        label: "Contacts",
+        url: "/contacts",
+        template: "contacts",
+        entity: "/api/contacts/",
+        icon: "page",
+        id: "contacts",
+        caches: true,
+        local: true,
+        key: "contacts",
+      },
+    ],
+    right_panel: [
+      {
+        type: "location-dropdown",
+        options: ["Kolkata", "Hydrabad", "Chennai", "Delhi"],
+      },
+      {
+        type: "login-button",
+        label: "Login",
+      },
+      {
+        type: "header-button",
+        label: "Book An Order",
+        url: "/book-an-order",
+      },
+    ],
+  }}
+/>
+
+And Using Above Json we got Header like this
+
+{" "}
+<Image src="/header-01.webp" alt="Example Image" width="752" height="46" />
+
+### Footer
+
+We get this json from configuration, here we get entity name(api endpoint) and template name, and also one more flag caches.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    template: "footer-style-one",
+    entity: "/api/footer-style-one/",
+    caches: false,
+  }}
+/>
+
+Using entity call api(`like http://api-domain/api/footer-style-one/`) and get footer json data and Load template That is match name according template that is got in Json configuration. and When we get Header json we pass all data into Template like Copyright text, Footer Json and Logo Site name that we got on Configuration > meta data. and we Got Footer Like as we shown below. Some data is not need to change every time like header and footer many be some other in some special condition, then we do not have need to call that data every time and make load on server then we pass flag cache it's mean we store that data on local and we use every time until we need to load new data
+
+We got This Data in template
+
+<JsonViewer
+  collapse={false}
+  json={{
+    topFooter: {
+      column_1: [
+        {
+          type: "logo",
+          url: "/assets/delivery-pigeon/footer-logo.png",
+          link: {
+            url: "/",
+            target: "_self",
+          },
+        },
+      ],
+      column_2: [
+        {
+          type: "menu",
+          label: "Menu",
+          menu: [
+            {
+              title: "Home",
+              url: "/",
+            },
+            {
+              title: "About Us",
+              url: "/about",
+            },
+            {
+              title: "Become a Business Partner",
+              url: "/business-partner",
+            },
+            {
+              title: "Media",
+              url: "/media",
+            },
+            {
+              title: "Contacts",
+              url: "/contacts",
+            },
+          ],
+        },
+      ],
+      column_3: [
+        {
+          type: "menu",
+          label: "Links",
+          menu: [
+            {
+              title: "Cookie Statement",
+              url: "/cookie-statement",
+            },
+            {
+              title: "Privacy Policy",
+              url: "/privacy-policy",
+            },
+            {
+              title: "Terms Of Service",
+              url: "/terms-of-service",
+            },
+            {
+              title: "Refund Policy",
+              url: "/refund-policy",
+            },
+            {
+              title: "FAQs",
+              url: "/faqs",
+            },
+          ],
+        },
+      ],
+      column_4: [
+        {
+          type: "info",
+          label: "Download Provider App",
+          content:
+            "Delivery Pigeon Provider App is for delivery partner who are willing to sign up to our organization to be a part of the team that helps make the high-quality deliveries possible. Free job opportunity, no agent and no payment, just download the app and fill in your details.",
+        },
+        {
+          type: "logo",
+          url: "/assets/delivery-pigeon/app-store-icon2.png",
+          link: {
+            url: "https://apps.apple.com/us/app/delivery-pigeon/id1552237117",
+            target: "_target",
+          },
+        },
+      ],
+      column_5: [
+        {
+          type: "info",
+          label: "Download Customer App",
+          content:
+            "Delivery Pigeon Customer App is for customers who are looking to place orders for seamless deliveries. The procedure for delivery is made easy and secure, without going through any hassles.",
+        },
+        {
+          type: "logo",
+          url: "/assets/delivery-pigeon/app-store-icon1.png",
+          link: {
+            url: "https://play.google.com/store/apps/details?id=com.pigeon.customer.app",
+            target: "_target",
+          },
+        },
+      ],
+    },
+    bottomFooter: {
+      column_1: [
+        {
+          type: "text",
+          content: "Delivery Pigeon. All rights reserved.",
+        },
+      ],
+      column_2: [
+        {
+          type: "footer_social_icon",
+          social_icon: [
+            {
+              url: "https://www.facebook.com/deliverypigeon",
+              icon: "FaFacebookF",
+              target: "_blank",
+            },
+            {
+              url: "https://www.instagram.com/deliverypigeon/",
+              icon: "FaInstagram",
+              target: "_blank",
+            },
+            {
+              url: "https://twitter.com/DeliveryPigeon1",
+              icon: "FaXTwitter",
+              target: "_blank",
+            },
+            {
+              url: "https://www.linkedin.com/company/delivery-pigeon/",
+              icon: "FaLinkedinIn",
+              target: "_blank",
+            },
+          ],
+        },
+      ],
+    },
+  }}
+/>
+
+And Using Above Json we got Footer like this
+
+<Image src="/footer.png" alt="Example Image" width="752" height="46" />
+
+### Admin Menu
+
+Admin menu contain list of pages of dashboard that have access to user. Admin menu is array of object which contain template name, label, url, entity, icon, id, cache, local, and key.
+
+| Property   | Description                                                                                               |
+| ---------- | :-------------------------------------------------------------------------------------------------------- |
+| `template` | The name of the template used for the page                                                                |
+| `label`    | The display name of the menu item                                                                         |
+| `url`      | The URL of the page                                                                                       |
+| `entity`   | The endpoint of API                                                                                       |
+| `icon`     | The icon representing the menu item                                                                       |
+| `id`       | A unique identifier for the menu item.                                                                    |
+| `caches`   | Indicates whether the page should be cached.                                                              |
+| `key`      | A key used for identifying the menu item and also used to highlight menu when open dashboard details page |
+| `order`    | Order is used to manage order of display in menus                                                         |
+
+### Auth Menu
+
+Auth menu contain list of pages that can be used before login user like login, register verify user ec. Auth menu is array of object which contain template name, label, url, entity, icon, id, cache, local, and key.
+
+| Property    | Description                                                                                                                                                                                                                          |
+| ----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`     | This label is Display Where we show list of page                                                                                                                                                                                     |
+| `template`  | This is template name, and template name is used to Mapping template and Render match template.                                                                                                                                      |
+| `url`       | This is page url                                                                                                                                                                                                                     |
+| `id`        | id is used to uniquely identify menu in all menu array                                                                                                                                                                               |
+| `caches`    | caches is used to store caches of api json data                                                                                                                                                                                      |
+| `nextPage`  | This is next page url. After auth form submit success fully then we can redirect user to next page using                                                                                                                             |
+| `param`     | if we want to send some data from one to another auth pages after form submit successful then param parameter will help them. We got name of form filed from param where we can collect info using name and pass into another pages. |
+| `prevParam` | It have data of that is pass by previous pages.                                                                                                                                                                                      |

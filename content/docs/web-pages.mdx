@@ -1,0 +1,180 @@
+---
+title: Web pages (Site Menu)
+description: Your first document
+---
+
+import { JsonViewer, Image } from "@/components/core";
+
+<div class="admin-page-diagram">
+  <Image src="/site-process.svg" alt="Example Image" width="752" height="46" />
+</div>
+
+Weh user open web page first is is open Home page and we got json with `Web Pages` configuration
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+      configCaches: true,
+      copyright_text: "XU Lifestyle",
+      login_logo: "https://xulifestyle.com/xu-logo.svg",
+      sidebar_icon: "https://xulifestyle.com/favicon.ico",
+    },
+    header: {
+      template: "header-style-one",
+      entity: "/api/society/",
+      caches: false,
+    },
+    footer: {
+      template: "footer-style-one",
+      entity: "/api/society/",
+      caches: false,
+    },
+    adminMenu: [],
+    siteMenu: [
+      {
+        label: "Home",
+        url: "/",
+        template: "home",
+        entity: "/api/home/",
+        icon: "page",
+        id: "home",
+        caches: true,
+        local: true,
+        key: "home",
+      },
+      {
+        label: "About Us",
+        url: "/about",
+        template: "about-us",
+        entity: "/api/about-us/",
+        icon: "page",
+        id: "about-us",
+        caches: true,
+        local: true,
+        key: "about-us",
+      },
+      {
+        label: "Become a Business Partner",
+        url: "/business-partner",
+        template: "business-partner",
+        entity: "/api/business-partner/",
+        icon: "page",
+        id: "business-partner",
+        caches: true,
+        local: true,
+        key: "business-partner",
+      },
+      {
+        label: "Media",
+        url: "/media",
+        template: "media",
+        entity: "/api/media/",
+        icon: "page",
+        id: "media",
+        caches: true,
+        local: true,
+        key: "media",
+      },
+      {
+        label: "Contacts",
+        url: "/contacts",
+        template: "contacts",
+        entity: "/api/contacts/",
+        icon: "page",
+        id: "contacts",
+        caches: true,
+        local: true,
+        key: "contacts",
+      },
+    ],
+    authMenu: [],
+  }}
+/>
+
+In above json we have property `siteMenu` that which contain web pages menu configuration.
+
+<JsonViewer
+  collapse={false}
+  json={{
+    label: "Home",
+    url: "/",
+    template: "home",
+    entity: "/api/home/",
+    icon: "page",
+    id: "home",
+    caches: true,
+    local: true,
+    key: "home",
+  }}
+/>
+
+| Property   | Description                                                                                     |
+| ---------- | :---------------------------------------------------------------------------------------------- |
+| `label`    | THis is label of menu                                                                           |
+| `template` | This is template name, and template name is used to Mapping template and Render match template. |
+| `url`      | This is page url                                                                                |
+| `id`       | id is used to uniquely identify menu in all menu array                                          |
+| `caches`   | caches is used to store caches of api json data                                                 |
+| `icon`     | Icon of menu                                                                                    |
+| `local`    | if local true then get data from local json not calling any api for this section                |
+
+### Process of Web pages Page
+
+**Step 1. Get current page url :**
+When page is loading get url from browser.
+
+**Step 2. Check Is Page Exist :**
+Check is page is exist in menu config list
+
+**Step 3. Call Option APi:**
+If Page is exist in menu call option API
+
+`Option Api Data formate`
+
+<JsonViewer
+  collapse={false}
+  json={{
+    meta: {
+      title: "XU Lifestyle",
+      description: "",
+    },
+    form: {},
+    actions: {},
+    table: {},
+    layout: [
+      {
+        template: "home-page-template",
+        url: "/",
+        entity: "/api/home/",
+        api: [
+          {
+            entity: "/api/home/",
+            method: "GET",
+            apiKey: "get",
+          },
+        ],
+      },
+    ],
+    permissions: ["get", "put", "patch", "post", "delete", "options"],
+    POST: {},
+  }}
+/>
+
+**Step 4. RenderTemplate:**
+After successed Option api Render template and check `layout` property in above option api json.
+If template have more than one element then it render using loop.
+
+Here layout is contain configuration of nested template data. because one single page may have more than one or two section and every section may have different layout, and for every layout have different template. So here we have template name api endpoint, and if it is listing template then it also have details page template name.
+
+Fot this template data we get another `property` called `api`. This is also array formate it content list of configuration for data that includes api end-point, api key, api methods etc.
+
+**Step 5. Call Get apis:**
+Here calling apis and after success api.
+
+and put all api data into `data` object and option api json push into `config` option and pass into template
+
+**Step 6. Render Data on page:**
+Now we are Show skelton and Render template and call apis for data there are may be single or multiple api depend on requirement, and wait response. In API response get an error then show error in ui, if api is successed then Pass all data into template and display on Page
