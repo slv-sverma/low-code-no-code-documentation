@@ -11,6 +11,7 @@
 
 # next.js
 /.next/
+/old-backup/
 /out/
 
 # production
