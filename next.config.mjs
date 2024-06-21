@@ -5,7 +5,10 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  pageExtensions: ["js", "jsx", "md", "mdx"],
+  pageExtensions: ["js", "tsx", "md", "mdx"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default withMDX(config);

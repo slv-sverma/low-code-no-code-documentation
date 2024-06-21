@@ -3,113 +3,109 @@ title: Web pages (Site Menu)
 description: Your first document
 ---
 
-import { JsonViewer, Image } from "@/components/core";
-
 <div class="admin-page-diagram">
-  <Image src="/site-process.svg" alt="Example Image" width="752" height="46" />
+  <img src="/site-process.svg" alt="Example Image" width="752" height="46" />
 </div>
 
 Weh user open web page first is is open Home page and we got json with `Web Pages` configuration
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
-      configCaches: true,
-      copyright_text: "XU Lifestyle",
-      login_logo: "https://xulifestyle.com/xu-logo.svg",
-      sidebar_icon: "https://xulifestyle.com/favicon.ico",
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": "",
+    "configCaches": true,
+    "copyright_text": "XU Lifestyle",
+    "login_logo": "https://xulifestyle.com/xu-logo.svg",
+    "sidebar_icon": "https://xulifestyle.com/favicon.ico"
+  },
+  "header": {
+    "template": "header-style-one",
+    "entity": "/api/society/",
+    "caches": false
+  },
+  "footer": {
+    "template": "footer-style-one",
+    "entity": "/api/society/",
+    "caches": false
+  },
+  "adminMenu": [],
+  "siteMenu": [
+    {
+      "label": "Home",
+      "url": "/",
+      "template": "home",
+      "entity": "/api/home/",
+      "icon": "page",
+      "id": "home",
+      "caches": true,
+      "local": true,
+      "key": "home"
     },
-    header: {
-      template: "header-style-one",
-      entity: "/api/society/",
-      caches: false,
+    {
+      "label": "About Us",
+      "url": "/about",
+      "template": "about-us",
+      "entity": "/api/about-us/",
+      "icon": "page",
+      "id": "about-us",
+      "caches": true,
+      "local": true,
+      "key": "about-us"
     },
-    footer: {
-      template: "footer-style-one",
-      entity: "/api/society/",
-      caches: false,
+    {
+      "label": "Become a Business Partner",
+      "url": "/business-partner",
+      "template": "business-partner",
+      "entity": "/api/business-partner/",
+      "icon": "page",
+      "id": "business-partner",
+      "caches": true,
+      "local": true,
+      "key": "business-partner"
     },
-    adminMenu: [],
-    siteMenu: [
-      {
-        label: "Home",
-        url: "/",
-        template: "home",
-        entity: "/api/home/",
-        icon: "page",
-        id: "home",
-        caches: true,
-        local: true,
-        key: "home",
-      },
-      {
-        label: "About Us",
-        url: "/about",
-        template: "about-us",
-        entity: "/api/about-us/",
-        icon: "page",
-        id: "about-us",
-        caches: true,
-        local: true,
-        key: "about-us",
-      },
-      {
-        label: "Become a Business Partner",
-        url: "/business-partner",
-        template: "business-partner",
-        entity: "/api/business-partner/",
-        icon: "page",
-        id: "business-partner",
-        caches: true,
-        local: true,
-        key: "business-partner",
-      },
-      {
-        label: "Media",
-        url: "/media",
-        template: "media",
-        entity: "/api/media/",
-        icon: "page",
-        id: "media",
-        caches: true,
-        local: true,
-        key: "media",
-      },
-      {
-        label: "Contacts",
-        url: "/contacts",
-        template: "contacts",
-        entity: "/api/contacts/",
-        icon: "page",
-        id: "contacts",
-        caches: true,
-        local: true,
-        key: "contacts",
-      },
-    ],
-    authMenu: [],
-  }}
-/>
+    {
+      "label": "Media",
+      "url": "/media",
+      "template": "media",
+      "entity": "/api/media/",
+      "icon": "page",
+      "id": "media",
+      "caches": true,
+      "local": true,
+      "key": "media"
+    },
+    {
+      "label": "Contacts",
+      "url": "/contacts",
+      "template": "contacts",
+      "entity": "/api/contacts/",
+      "icon": "page",
+      "id": "contacts",
+      "caches": true,
+      "local": true,
+      "key": "contacts"
+    }
+  ],
+  "authMenu": []
+}
+```
 
 In above json we have property `siteMenu` that which contain web pages menu configuration.
 
-<JsonViewer
-  collapse={false}
-  json={{
-    label: "Home",
-    url: "/",
-    template: "home",
-    entity: "/api/home/",
-    icon: "page",
-    id: "home",
-    caches: true,
-    local: true,
-    key: "home",
-  }}
-/>
+```json
+{
+  "label": "Home",
+  "url": "/",
+  "template": "home",
+  "entity": "/api/home/",
+  "icon": "page",
+  "id": "home",
+  "caches": true,
+  "local": true,
+  "key": "home"
+}
+```
 
 | Property   | Description                                                                                     |
 | ---------- | :---------------------------------------------------------------------------------------------- |
@@ -134,34 +130,33 @@ If Page is exist in menu call option API
 
 `Option Api Data formate`
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
-    },
-    form: {},
-    actions: {},
-    table: {},
-    layout: [
-      {
-        template: "home-page-template",
-        url: "/",
-        entity: "/api/home/",
-        api: [
-          {
-            entity: "/api/home/",
-            method: "GET",
-            apiKey: "get",
-          },
-        ],
-      },
-    ],
-    permissions: ["get", "put", "patch", "post", "delete", "options"],
-    POST: {},
-  }}
-/>
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": ""
+  },
+  "form": {},
+  "actions": {},
+  "table": {},
+  "layout": [
+    {
+      "template": "home-page-template",
+      "url": "/",
+      "entity": "/api/home/",
+      "api": [
+        {
+          "entity": "/api/home/",
+          "method": "GET",
+          "apiKey": "get"
+        }
+      ]
+    }
+  ],
+  "permissions": ["get", "put", "patch", "post", "delete", "options"],
+  "POST": {}
+}
+```
 
 **Step 4. RenderTemplate:**
 After successed Option api Render template and check `layout` property in above option api json.

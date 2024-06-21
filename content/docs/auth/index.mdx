@@ -3,39 +3,36 @@ title: Auth Pages
 description: Your first document
 ---
 
-import { JsonViewer, Image } from "@/components/core";
-
 When we open auth pages we get configuration from config api, that looks like below.
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
-      configCaches: true,
-      copyright_text: "XU Lifestyle",
-      login_logo: "https://xulifestyle.com/xu-logo.svg",
-      sidebar_icon: "https://xulifestyle.com/favicon.ico",
-    },
-    header: {},
-    footer: {},
-    adminMenu: [],
-    siteMenu: [],
-    authMenu: [
-      {
-        template: "login-template-one",
-        label: "Sign in",
-        url: "/login",
-        entity: "/noauth/api/login-via-email/",
-        id: "login-email",
-        caches: true,
-        nextPage: "/login/verify-otp",
-        param: "email",
-      },
-    ],
-  }}
-/>
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": "",
+    "configCaches": true,
+    "copyright_text": "XU Lifestyle",
+    "login_logo": "https://xulifestyle.com/xu-logo.svg",
+    "sidebar_icon": "https://xulifestyle.com/favicon.ico"
+  },
+  "header": {},
+  "footer": {},
+  "adminMenu": [],
+  "siteMenu": [],
+  "authMenu": [
+    {
+      "template": "login-template-one",
+      "label": "Sign in",
+      "url": "/login",
+      "entity": "/noauth/api/login-via-email/",
+      "id": "login-email",
+      "caches": true,
+      "nextPage": "/login/verify-otp",
+      "param": "email"
+    }
+  ]
+}
+```
 
 The auth menu is responsible for managing all authentication-related pages such as login, registration, and user verification. In this context, the configuration JSON specifically includes two pages: Login and Verify OTP. The auth menu is an array of objects, where each object contains the following properties:
 
@@ -68,91 +65,90 @@ Now we are calling Option api and wait for response if we get error in api then 
 
 `Option Api Data formate`
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": ""
+  },
+  "form": {
+    "title": "Email Login",
+    "description": null,
+    "form_template": "form-template-one",
+    "entity": "/noauth/api/login-via-email/",
+    "size": {
+      "width": 50,
+      "height": "auto",
+      "maxWidth": 50,
+      "maxHeight": 80
     },
-    form: {
-      title: "Email Login",
-      description: null,
-      form_template: "form-template-one",
-      entity: "/noauth/api/login-via-email/",
-      size: {
-        width: 50,
-        height: "auto",
-        maxWidth: 50,
-        maxHeight: 80,
-      },
-      column: {
-        desktop: 1,
-        laptop: 1,
-        tablet: 1,
-      },
-      gap: 4,
+    "column": {
+      "desktop": 1,
+      "laptop": 1,
+      "tablet": 1
     },
-    actions: {},
-    table: {
-      view: ["heading", "sub_heading", "email", "id"],
-      filter: {},
+    "gap": 4
+  },
+  "actions": {},
+  "table": {
+    "view": ["heading", "sub_heading", "email", "id"],
+    "filter": {}
+  },
+  "layout": [
+    {
+      "template": "auth-style-one",
+      "url": "/login",
+      "entity": "/noauth/api/login-via-email/",
+      "api": []
+    }
+  ],
+  "permissions": [],
+  "POST": {
+    "heading": {
+      "type": "heading",
+      "label": "Welcome Back",
+      "className": "mb-[-16px]",
+      "style": {
+        "align": "center"
+      }
     },
-    layout: [
-      {
-        template: "auth-style-one",
-        url: "/login",
-        entity: "/noauth/api/login-via-email/",
-        api: [],
-      },
-    ],
-    permissions: [],
-    POST: {
-      heading: {
-        type: "heading",
-        label: "Welcome Back",
-        className: "mb-[-16px]",
-        style: {
-          align: "center",
-        },
-      },
-      sub_heading: {
-        type: "description",
-        label: "Please sign in to continue",
-        className: "mb-8",
-        style: {
-          align: "center",
-        },
-      },
-      email: {
-        type: "email",
-        read_only: false,
-        label: "Enter your email",
-        required: true,
-        max_length: 100,
-        icon: "email",
-        label_hidden: true,
-        placeholder: "Email",
-      },
-      create: {
-        type: "button",
-        required: true,
-        read_only: false,
-        label: "Login",
-        style: {
-          align: "right",
-          isFullWidth: true,
-          colMerge: {
-            deskTop: 1,
-            tablet: 1,
-            mobile: 1,
-          },
-        },
-        button_style: "login",
-      },
+    "sub_heading": {
+      "type": "description",
+      "label": "Please sign in to continue",
+      "className": "mb-8",
+      "style": {
+        "align": "center"
+      }
     },
-  }}
-/>
+    "email": {
+      "type": "email",
+      "read_only": false,
+      "label": "Enter your email",
+      "required": true,
+      "max_length": 100,
+      "icon": "email",
+      "label_hidden": true,
+      "placeholder": "Email"
+    },
+    "create": {
+      "type": "button",
+      "required": true,
+      "read_only": false,
+      "label": "Login",
+      "style": {
+        "align": "right",
+        "isFullWidth": true,
+        "colMerge": {
+          "deskTop": 1,
+          "tablet": 1,
+          "mobile": 1
+        }
+      },
+      "button_style": "login"
+    }
+  }
+}
+```
 
 | Property      | Description                                                                                                              |
 | ------------- | :----------------------------------------------------------------------------------------------------------------------- |

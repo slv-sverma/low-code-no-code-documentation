@@ -3,39 +3,36 @@ title: Verify Otp
 description: Components 848787878
 ---
 
-import { JsonViewer, Image } from "@/components/core";
-
 When we open login page we get configuration from config api. and we get json like this.
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
-      configCaches: true,
-      copyright_text: "XU Lifestyle",
-      login_logo: "https://xulifestyle.com/xu-logo.svg",
-      sidebar_icon: "https://xulifestyle.com/favicon.ico",
-    },
-    header: {},
-    footer: {},
-    adminMenu: [],
-    siteMenu: [],
-    authMenu: [
-      {
-        template: "login-template-one",
-        label: "Sign in",
-        url: "/login/verify-otp",
-        entity: "/noauth/api/verify-otp/",
-        id: "login-email-verify-otp",
-        keepToken: true,
-        caches: true,
-        prevParam: "email",
-      },
-    ],
-  }}
-/>
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": "",
+    "configCaches": true,
+    "copyright_text": "XU Lifestyle",
+    "login_logo": "https://xulifestyle.com/xu-logo.svg",
+    "sidebar_icon": "https://xulifestyle.com/favicon.ico"
+  },
+  "header": {},
+  "footer": {},
+  "adminMenu": [],
+  "siteMenu": [],
+  "authMenu": [
+    {
+      "template": "login-template-one",
+      "label": "Sign in",
+      "url": "/login/verify-otp",
+      "entity": "/noauth/api/verify-otp/",
+      "id": "login-email-verify-otp",
+      "keepToken": true,
+      "caches": true,
+      "prevParam": "email"
+    }
+  ]
+}
+```
 
 Here get auth Menu that have some require property for next steps
 
@@ -54,123 +51,122 @@ Here we we call option api that we get endpoint `/noauth/api/verify-otp/` from a
 
 ### Option API Data
 
-<JsonViewer
-  collapse={false}
-  json={{
-    meta: {
-      title: "XU Lifestyle",
-      description: "",
+```json
+{
+  "meta": {
+    "title": "XU Lifestyle",
+    "description": ""
+  },
+  "form": {
+    "title": "Verify OTP",
+    "description": null,
+    "form_template": "form-template-one",
+    "entity": "/noauth/api/verify-otp/",
+    "size": {
+      "width": 50,
+      "height": "auto",
+      "maxWidth": 50,
+      "maxHeight": 80
     },
-    form: {
-      title: "Verify OTP",
-      description: null,
-      form_template: "form-template-one",
-      entity: "/noauth/api/verify-otp/",
-      size: {
-        width: 50,
-        height: "auto",
-        maxWidth: 50,
-        maxHeight: 80,
-      },
-      column: {
-        desktop: 1,
-        laptop: 1,
-        tablet: 1,
-      },
-      gap: 4,
+    "column": {
+      "desktop": 1,
+      "laptop": 1,
+      "tablet": 1
     },
-    actions: {},
-    table: {
-      view: ["heading", "sub_heading", "email", "otp", "id"],
-      filter: {},
+    "gap": 4
+  },
+  "actions": {},
+  "table": {
+    "view": ["heading", "sub_heading", "email", "otp", "id"],
+    "filter": {}
+  },
+  "layout": [
+    {
+      "template": "auth-style-one",
+      "url": "/login/verify-otp",
+      "entity": "/noauth/api/verify-otp/",
+      "api": []
+    }
+  ],
+  "permissions": [],
+  "POST": {
+    "heading": {
+      "type": "heading",
+      "label": "Enter Verification code",
+      "className": "mb-0",
+      "style": {
+        "align": "center"
+      }
     },
-    layout: [
-      {
-        template: "auth-style-one",
-        url: "/login/verify-otp",
-        entity: "/noauth/api/verify-otp/",
-        api: [],
-      },
-    ],
-    permissions: [],
-    POST: {
-      heading: {
-        type: "heading",
-        label: "Enter Verification code",
-        className: "mb-0",
-        style: {
-          align: "center",
+    "sub_heading": {
+      "type": "link",
+      "label_hidden": true,
+      "content": [
+        {
+          "text": "We have sent an OTP on your email address ",
+          "link": "",
+          "target": ""
         },
-      },
-      sub_heading: {
-        type: "link",
-        label_hidden: true,
-        content: [
-          {
-            text: "We have sent an OTP on your email address ",
-            link: "",
-            target: "",
-          },
-          {
-            text: "email_address",
-            type: "replace",
-          },
-          {
-            text: ".",
-          },
-          {
-            text: "Edit Email",
-            link: "/login",
-            target: "_self",
-          },
-        ],
-        className: "mb-0",
-        style: {
-          align: "center",
+        {
+          "text": "email_address",
+          "type": "replace"
         },
-      },
-      email: {
-        type: "hidden",
-        read_only: true,
-        label: "Email",
-        required: true,
-        max_length: 100,
-        placeholder: "Email",
-      },
-      otp: {
-        type: "otp",
-        required: true,
-        read_only: false,
-        hidden: false,
-        exact_length: 4,
-        label: "Enter your OTP here",
-      },
-      create: {
-        type: "button",
-        required: true,
-        read_only: false,
-        label: "Verify Otp",
-        style: {
-          align: "right",
-          isFullWidth: true,
-          colMerge: {
-            deskTop: 1,
-            tablet: 1,
-            mobile: 1,
-          },
+        {
+          "text": "."
         },
-        button_style: "login",
-        update: "Verify Otp",
-      },
+        {
+          "text": "Edit Email",
+          "link": "/login",
+          "target": "_self"
+        }
+      ],
+      "className": "mb-0",
+      "style": {
+        "align": "center"
+      }
     },
-  }}
-/>
+    "email": {
+      "type": "hidden",
+      "read_only": true,
+      "label": "Email",
+      "required": true,
+      "max_length": 100,
+      "placeholder": "Email"
+    },
+    "otp": {
+      "type": "otp",
+      "required": true,
+      "read_only": false,
+      "hidden": false,
+      "exact_length": 4,
+      "label": "Enter your OTP here"
+    },
+    "create": {
+      "type": "button",
+      "required": true,
+      "read_only": false,
+      "label": "Verify Otp",
+      "style": {
+        "align": "right",
+        "isFullWidth": true,
+        "colMerge": {
+          "deskTop": 1,
+          "tablet": 1,
+          "mobile": 1
+        }
+      },
+      "button_style": "login",
+      "update": "Verify Otp"
+    }
+  }
+}
+```
 
 ### Preview of page
 
 when we got option api data just render `login-template-one` template that look like that
 
-<Image
+<img
   src="/verify-otp.png"
   class="ui-image"
   alt="Example Image"

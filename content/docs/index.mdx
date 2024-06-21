@@ -3,7 +3,6 @@ title: Application Process
 description: Your first document
 ---
 
-import { JsonViewer, Image } from "@/components/core";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 Low-code and no-code are approaches to software development that aim to simplify
@@ -15,7 +14,7 @@ with limited coding experience.
 In a low-code/no-code application, all functionalities are executed based on a configuration JSON retrieved from the backend. When the application loads for the first time, it calls an API to fetch this configuration JSON data. This configuration determines which site is loading and includes metadata, headers, footers, site menus, authentication menus, and admin menus configuration.
 
 <div align="center">
-  <Image src="/app-process.svg" alt="Example Image" width="751" height="581" />
+  <img src="/app-process.svg" alt="Example Image" width="751" height="581" />
 </div>
 
 On the first app load, we call the configuration API for application settings. The configuration is divided into six main categories.
@@ -34,9 +33,8 @@ if site open Non logged-in user they do not have access for Dashboard/Admin Page
 
 <Tabs items={["Non Logged-in user", "Logged-in user"]}>
   <Tab value="Non Logged-in user" class="no-border no-bg">
-    <JsonViewer
-      collapse={1}
-      json={{
+    ```json
+    {
         meta: {
           title: "XU Lifestyle",
           description: "",
@@ -91,13 +89,13 @@ if site open Non logged-in user they do not have access for Dashboard/Admin Page
             prevParam: "email",
           },
         ],
-      }}
-    />
+      }
+    ```
+    
   </Tab>
   <Tab value="Logged-in user" class="no-border no-bg">
-    <JsonViewer
-      collapse={1}
-      json={{
+    ```json
+    {
         meta: {
           title: "XU Lifestyle",
           description: "",
@@ -285,8 +283,8 @@ if site open Non logged-in user they do not have access for Dashboard/Admin Page
             prevParam: "email",
           },
         ],
-      }}
-    />
+      }
+    ```
   </Tab>
 </Tabs>
 
@@ -324,272 +322,265 @@ These details collectively define the structure and behavior of the site menu, e
 
 We get this json from configuration, here we get entity name(api endpoint) and template name, and also one more flag caches.
 
-<JsonViewer
-  collapse={false}
-  json={{
-    template: "header-style-one",
-    entity: "/api/society/",
-    caches: false,
-  }}
-/>
+```json
+{
+  "template": "header-style-one",
+  "entity": "/api/society/",
+  "caches": false
+}
+```
 
 Using entity call api(`like: http://api-domain/api/header-style-one/`) and get Header json data and Load template That is match name according template that is got in Json configuration. and When we get Header json we pass all data into Template, Site Menu Json, Header Json and Logo Site name that we got on Configuration > meta data. and we Got Header as we shown below
 
 We got This Data in template
 
-<JsonViewer
-  collapse={false}
-  json={{
-    logo: {
-      image_link: "/assets/delivery-pigeon/logo.webp",
-      title: "",
-      tagline: "",
-      link: {
-        url: "/",
-        target: "_self",
-      },
+```json
+{
+  "logo": {
+    "image_link": "/assets/delivery-pigeon/logo.webp",
+    "title": "",
+    "tagline": "",
+    "link": {
+      "url": "/",
+      "target": "_self"
+    }
+  },
+  "menu": [
+    {
+      "label": "Home",
+      "url": "/",
+      "template": "home",
+      "entity": "/api/home/",
+      "icon": "page",
+      "id": "home",
+      "caches": true,
+      "local": true,
+      "key": "home"
     },
-    menu: [
-      {
-        label: "Home",
-        url: "/",
-        template: "home",
-        entity: "/api/home/",
-        icon: "page",
-        id: "home",
-        caches: true,
-        local: true,
-        key: "home",
-      },
-      {
-        label: "About Us",
-        url: "/about",
-        template: "about-us",
-        entity: "/api/about-us/",
-        icon: "page",
-        id: "about-us",
-        caches: true,
-        local: true,
-        key: "about-us",
-      },
-      {
-        label: "Become a Business Partner",
-        url: "/business-partner",
-        template: "business-partner",
-        entity: "/api/business-partner/",
-        icon: "page",
-        id: "business-partner",
-        caches: true,
-        local: true,
-        key: "business-partner",
-      },
-      {
-        label: "Media",
-        url: "/media",
-        template: "media",
-        entity: "/api/media/",
-        icon: "page",
-        id: "media",
-        caches: true,
-        local: true,
-        key: "media",
-      },
-      {
-        label: "Contacts",
-        url: "/contacts",
-        template: "contacts",
-        entity: "/api/contacts/",
-        icon: "page",
-        id: "contacts",
-        caches: true,
-        local: true,
-        key: "contacts",
-      },
-    ],
-    right_panel: [
-      {
-        type: "location-dropdown",
-        options: ["Kolkata", "Hydrabad", "Chennai", "Delhi"],
-      },
-      {
-        type: "login-button",
-        label: "Login",
-      },
-      {
-        type: "header-button",
-        label: "Book An Order",
-        url: "/book-an-order",
-      },
-    ],
-  }}
-/>
+    {
+      "label": "About Us",
+      "url": "/about",
+      "template": "about-us",
+      "entity": "/api/about-us/",
+      "icon": "page",
+      "id": "about-us",
+      "caches": true,
+      "local": true,
+      "key": "about-us"
+    },
+    {
+      "label": "Become a Business Partner",
+      "url": "/business-partner",
+      "template": "business-partner",
+      "entity": "/api/business-partner/",
+      "icon": "page",
+      "id": "business-partner",
+      "caches": true,
+      "local": true,
+      "key": "business-partner"
+    },
+    {
+      "label": "Media",
+      "url": "/media",
+      "template": "media",
+      "entity": "/api/media/",
+      "icon": "page",
+      "id": "media",
+      "caches": true,
+      "local": true,
+      "key": "media"
+    },
+    {
+      "label": "Contacts",
+      "url": "/contacts",
+      "template": "contacts",
+      "entity": "/api/contacts/",
+      "icon": "page",
+      "id": "contacts",
+      "caches": true,
+      "local": true,
+      "key": "contacts"
+    }
+  ],
+  "right_panel": [
+    {
+      "type": "location-dropdown",
+      "options": ["Kolkata", "Hydrabad", "Chennai", "Delhi"]
+    },
+    {
+      "type": "login-button",
+      "label": "Login"
+    },
+    {
+      "type": "header-button",
+      "label": "Book An Order",
+      "url": "/book-an-order"
+    }
+  ]
+}
+```
 
 And Using Above Json we got Header like this
 
-{" "}
-<Image src="/header-01.webp" alt="Example Image" width="752" height="46" />
+<img src="/header-01.webp" alt="Example Image" width="752" height="46" />
 
 ### Footer
 
 We get this json from configuration, here we get entity name(api endpoint) and template name, and also one more flag caches.
 
-<JsonViewer
-  collapse={false}
-  json={{
-    template: "footer-style-one",
-    entity: "/api/footer-style-one/",
-    caches: false,
-  }}
-/>
+```json
+{
+  "template": "footer-style-one",
+  "entity": "/api/footer-style-one/",
+  "caches": false
+}
+```
 
 Using entity call api(`like http://api-domain/api/footer-style-one/`) and get footer json data and Load template That is match name according template that is got in Json configuration. and When we get Header json we pass all data into Template like Copyright text, Footer Json and Logo Site name that we got on Configuration > meta data. and we Got Footer Like as we shown below. Some data is not need to change every time like header and footer many be some other in some special condition, then we do not have need to call that data every time and make load on server then we pass flag cache it's mean we store that data on local and we use every time until we need to load new data
 
 We got This Data in template
 
-<JsonViewer
-  collapse={false}
-  json={{
-    topFooter: {
-      column_1: [
-        {
-          type: "logo",
-          url: "/assets/delivery-pigeon/footer-logo.png",
-          link: {
-            url: "/",
-            target: "_self",
+```json
+{
+  "topFooter": {
+    "column_1": [
+      {
+        "type": "logo",
+        "url": "/assets/delivery-pigeon/footer-logo.png",
+        "link": {
+          "url": "/",
+          "target": "_self"
+        }
+      }
+    ],
+    "column_2": [
+      {
+        "type": "menu",
+        "label": "Menu",
+        "menu": [
+          {
+            "title": "Home",
+            "url": "/"
           },
-        },
-      ],
-      column_2: [
-        {
-          type: "menu",
-          label: "Menu",
-          menu: [
-            {
-              title: "Home",
-              url: "/",
-            },
-            {
-              title: "About Us",
-              url: "/about",
-            },
-            {
-              title: "Become a Business Partner",
-              url: "/business-partner",
-            },
-            {
-              title: "Media",
-              url: "/media",
-            },
-            {
-              title: "Contacts",
-              url: "/contacts",
-            },
-          ],
-        },
-      ],
-      column_3: [
-        {
-          type: "menu",
-          label: "Links",
-          menu: [
-            {
-              title: "Cookie Statement",
-              url: "/cookie-statement",
-            },
-            {
-              title: "Privacy Policy",
-              url: "/privacy-policy",
-            },
-            {
-              title: "Terms Of Service",
-              url: "/terms-of-service",
-            },
-            {
-              title: "Refund Policy",
-              url: "/refund-policy",
-            },
-            {
-              title: "FAQs",
-              url: "/faqs",
-            },
-          ],
-        },
-      ],
-      column_4: [
-        {
-          type: "info",
-          label: "Download Provider App",
-          content:
-            "Delivery Pigeon Provider App is for delivery partner who are willing to sign up to our organization to be a part of the team that helps make the high-quality deliveries possible. Free job opportunity, no agent and no payment, just download the app and fill in your details.",
-        },
-        {
-          type: "logo",
-          url: "/assets/delivery-pigeon/app-store-icon2.png",
-          link: {
-            url: "https://apps.apple.com/us/app/delivery-pigeon/id1552237117",
-            target: "_target",
+          {
+            "title": "About Us",
+            "url": "/about"
           },
-        },
-      ],
-      column_5: [
-        {
-          type: "info",
-          label: "Download Customer App",
-          content:
-            "Delivery Pigeon Customer App is for customers who are looking to place orders for seamless deliveries. The procedure for delivery is made easy and secure, without going through any hassles.",
-        },
-        {
-          type: "logo",
-          url: "/assets/delivery-pigeon/app-store-icon1.png",
-          link: {
-            url: "https://play.google.com/store/apps/details?id=com.pigeon.customer.app",
-            target: "_target",
+          {
+            "title": "Become a Business Partner",
+            "url": "/business-partner"
           },
-        },
-      ],
-    },
-    bottomFooter: {
-      column_1: [
-        {
-          type: "text",
-          content: "Delivery Pigeon. All rights reserved.",
-        },
-      ],
-      column_2: [
-        {
-          type: "footer_social_icon",
-          social_icon: [
-            {
-              url: "https://www.facebook.com/deliverypigeon",
-              icon: "FaFacebookF",
-              target: "_blank",
-            },
-            {
-              url: "https://www.instagram.com/deliverypigeon/",
-              icon: "FaInstagram",
-              target: "_blank",
-            },
-            {
-              url: "https://twitter.com/DeliveryPigeon1",
-              icon: "FaXTwitter",
-              target: "_blank",
-            },
-            {
-              url: "https://www.linkedin.com/company/delivery-pigeon/",
-              icon: "FaLinkedinIn",
-              target: "_blank",
-            },
-          ],
-        },
-      ],
-    },
-  }}
-/>
+          {
+            "title": "Media",
+            "url": "/media"
+          },
+          {
+            "title": "Contacts",
+            "url": "/contacts"
+          }
+        ]
+      }
+    ],
+    "column_3": [
+      {
+        "type": "menu",
+        "label": "Links",
+        "menu": [
+          {
+            "title": "Cookie Statement",
+            "url": "/cookie-statement"
+          },
+          {
+            "title": "Privacy Policy",
+            "url": "/privacy-policy"
+          },
+          {
+            "title": "Terms Of Service",
+            "url": "/terms-of-service"
+          },
+          {
+            "title": "Refund Policy",
+            "url": "/refund-policy"
+          },
+          {
+            "title": "FAQs",
+            "url": "/faqs"
+          }
+        ]
+      }
+    ],
+    "column_4": [
+      {
+        "type": "info",
+        "label": "Download Provider App",
+        "content": "Delivery Pigeon Provider App is for delivery partner who are willing to sign up to our organization to be a part of the team that helps make the high-quality deliveries possible. Free job opportunity, no agent and no payment, just download the app and fill in your details."
+      },
+      {
+        "type": "logo",
+        "url": "/assets/delivery-pigeon/app-store-icon2.png",
+        "link": {
+          "url": "https://apps.apple.com/us/app/delivery-pigeon/id1552237117",
+          "target": "_target"
+        }
+      }
+    ],
+    "column_5": [
+      {
+        "type": "info",
+        "label": "Download Customer App",
+        "content": "Delivery Pigeon Customer App is for customers who are looking to place orders for seamless deliveries. The procedure for delivery is made easy and secure, without going through any hassles."
+      },
+      {
+        "type": "logo",
+        "url": "/assets/delivery-pigeon/app-store-icon1.png",
+        "link": {
+          "url": "https://play.google.com/store/apps/details?id=com.pigeon.customer.app",
+          "target": "_target"
+        }
+      }
+    ]
+  },
+  "bottomFooter": {
+    "column_1": [
+      {
+        "type": "text",
+        "content": "Delivery Pigeon. All rights reserved."
+      }
+    ],
+    "column_2": [
+      {
+        "type": "footer_social_icon",
+        "social_icon": [
+          {
+            "url": "https://www.facebook.com/deliverypigeon",
+            "icon": "FaFacebookF",
+            "target": "_blank"
+          },
+          {
+            "url": "https://www.instagram.com/deliverypigeon/",
+            "icon": "FaInstagram",
+            "target": "_blank"
+          },
+          {
+            "url": "https://twitter.com/DeliveryPigeon1",
+            "icon": "FaXTwitter",
+            "target": "_blank"
+          },
+          {
+            "url": "https://www.linkedin.com/company/delivery-pigeon/",
+            "icon": "FaLinkedinIn",
+            "target": "_blank"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
 
 And Using Above Json we got Footer like this
 
-<Image src="/footer.png" alt="Example Image" width="752" height="46" />
+<img src="/footer.png" alt="Example Image" width="752" height="46" />
 
 ### Admin Menu
 
